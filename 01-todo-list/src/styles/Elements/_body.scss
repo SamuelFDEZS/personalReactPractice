@@ -1,0 +1,13 @@
+body{
+  background-color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  color: #000;
+  overflow: hidden;
+}
+
+body.dark-mode{
+  background-color: #222;
+  color: #fff;
+}
+
