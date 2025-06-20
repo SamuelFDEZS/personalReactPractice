@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
-
+import { NoteLine } from './Components/NoteLine';
 function App () {
     const [isLightMode, setIsLightMode] = useState(true);
-
+    const [page, setPage] = useState({ 1: Array(16).fill(null) });
+    const [currentPage, setCurrentPage] = useState(1);
     const handleColorChange = () => {
         setIsLightMode(!isLightMode);
         console.log(isLightMode);
     };
 
     useEffect(() => {
-        document.body.classList.toggle('dark-mode');
+        if (isLightMode) {
+            document.body.classList.remove('dark-mode');
+        } else {
+            document.body.classList.add('dark-mode');
+        }
     }, [isLightMode]);
     return (
         <>
@@ -24,11 +29,18 @@ function App () {
                 </div>
 
                 <div className='header__username-container'>
-                    <span className='header__username-container__username' />
+                    <span className='header__username-container__username'>Samuel test</span>
                 </div>
             </header>
 
-            <main className='main' />
+            <div className='notebook-cover' />
+            <main className='notebook'>
+                {
+                    page[currentPage].map((text, i) => {
+                        return <NoteLine text={text} key={i} />;
+                    })
+                }
+            </main>
         </>
     );
 }

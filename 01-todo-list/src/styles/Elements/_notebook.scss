@@ -1,8 +1,29 @@
-/*Necesario para el cuaderno
-background: repeating-linear-gradient(
+.notebook{
+    width: 40%;
+    height: 90vh;
+    margin-top: 1%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: rgb(254, 233, 207);
+    /*background: repeating-linear-gradient(
     to bottom,
     #E8DCCA,
     #E8DCCA 39px,
     rgba(197, 197, 197, 0.516) 39px,
     white 40px
-*/
+    )*/
+    border: 3px solid black;
+
+    &__note-line{
+        resize: none;
+        overflow: hidden;
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid black;
+        outline: none;
+        background: transparent;
+        margin-top: 3%;
+        font-size: 1.3rem;
+    }
+}

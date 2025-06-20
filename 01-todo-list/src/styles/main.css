@@ -139,6 +139,7 @@ body {
   margin: 0;
   color: #000;
   overflow: hidden;
+  transition: 0.3s;
 }
 
 body.dark-mode {
@@ -146,13 +147,20 @@ body.dark-mode {
   color: #fff;
 }
 
+body.dark-mode .header {
+  color: black;
+  background-color: beige;
+}
+
 .header {
   width: 100%;
-  height: 12vh;
-  border: 3px solid red;
+  height: 8vh;
   display: flex;
   gap: 15%;
   align-items: center;
+  color: #fff;
+  background-color: #222;
+  transition: 0.3s;
 }
 .header__logo-container {
   width: 10%;
@@ -210,4 +218,33 @@ body.dark-mode {
 #checkboxInput:checked + .toggleSwitch {
   background-color: rgb(148, 118, 255);
   transition-duration: 0.2s;
+}
+
+.notebook {
+  width: 40%;
+  height: 90vh;
+  margin-top: 1%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: rgb(254, 233, 207);
+  /*background: repeating-linear-gradient(
+  to bottom,
+  #E8DCCA,
+  #E8DCCA 39px,
+  rgba(197, 197, 197, 0.516) 39px,
+  white 40px
+  )*/
+  border: 3px solid black;
+}
+.notebook__note-line {
+  resize: none;
+  overflow: hidden;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid black;
+  outline: none;
+  background: transparent;
+  margin-top: 3%;
+  font-size: 1.3rem;
 }/*# sourceMappingURL=main.css.map */
