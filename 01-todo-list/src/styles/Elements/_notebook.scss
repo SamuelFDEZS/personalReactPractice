@@ -1,29 +1,177 @@
-.notebook{
+.notebook {
     width: 40%;
-    height: 90vh;
+    height: 88vh;
     margin-top: 1%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    background-color: rgb(254, 233, 207);
-    /*background: repeating-linear-gradient(
-    to bottom,
-    #E8DCCA,
-    #E8DCCA 39px,
-    rgba(197, 197, 197, 0.516) 39px,
-    white 40px
-    )*/
-    border: 3px solid black;
+    transition: 0.3s ease;
 
-    &__note-line{
-        resize: none;
-        overflow: hidden;
+    &__page {
         width: 100%;
+        height: 100%;
+        background-color: rgb(254, 233, 207);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
         border: 0;
-        border-bottom: 2px solid black;
-        outline: none;
-        background: transparent;
-        margin-top: 3%;
-        font-size: 1.3rem;
+        transition: 0.3s ease;
+
+        &.previous-page {
+            transform: rotateY(-180deg) translateX(0.5%);
+        }
+    }
+
+    &.show-page {
+        border: 2px solid black;
+        box-shadow: 23px -12px 11px -7px rgba(0, 0, 0, 0.1);
+    }
+
+
+    &__cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-top: 2px solid #222;
+        border-bottom: 2px solid #222;
+        border-right: 2px solid #222;
+        box-shadow: 17px 13px 8px 3px rgba(0, 0, 0, 0.1);
+        z-index: 4;
+        background: linear-gradient(220.55deg, #7CF7FF 0%, #4B73FF 100%);
+        transform-origin: left;
+        transition: transform 1s ease;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: -3%;
+            top: 10px;
+            height: calc(100% - 20px);
+            width: 5%;
+            transition: width 0.5 ease;
+            background-image: repeating-linear-gradient(to bottom,
+                    transparent 0 15px,
+                    #333 15px 17px);
+
+        }
+
+        &.cover-opened {
+            transform: rotateY(-180deg) translateX(0.5%);
+
+            &::before {
+                width: 2%;
+                left: -1%;
+            }
+        }
+    }
+
+    &__task {
+        width: 100%;
+        display: flex;
+        height: 10%;
+        position: relative;
+        align-items: flex-end;
+        gap: 2%;
+        overflow: hidden;
+        margin-left: 1%;
+
+        &__checkbox {
+            position: absolute;
+            bottom: 10%;
+            scale: 1.3;
+            z-index: 3;
+        }
+
+        &__container {
+            width: 100%;
+
+            &__note-line {
+                resize: none;
+                overflow: hidden;
+                width: 90%;
+                border: 0;
+                border-bottom: 2px solid black;
+                outline: none;
+                background: transparent;
+                margin-top: 3%;
+                font-size: 1.3rem;
+                margin-left: 4%;
+                transition: all 0.3s;
+            }
+
+            &.completed {
+                & .notebook__task__container__note-line {
+                    text-decoration: line-through;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+}
+
+.notebook-buttons {
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translate(0, -50%);
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 30%;
+    justify-content: space-around;
+    align-items: center;
+
+    &__button {
+        font-size: 1rem;
+        background-color: #333;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: 0.3s ease;
+        border: 1px solid #fff;
+        opacity: 0;
+        visibility: hidden;
+
+        &:hover {
+            background-color: #555;
+        }
+
+        &:active {
+            scale: 0.9;
+        }
+
+        &.show-arrow {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &--close {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+}
+
+body.dark-mode .notebook-buttons__button {
+    background-color: #1f4e79;
+    color: #f0f8ff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: 1px solid #fff;
+
+    &:hover {
+        background-color: #3366cc;
     }
 }
