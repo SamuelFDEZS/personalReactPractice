@@ -224,24 +224,31 @@ body.dark-mode .header {
   width: 40%;
   height: 88vh;
   margin-top: 1%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
+  position: relative;
+  left: 41%;
   transition: 0.3s ease;
 }
 .notebook__page {
   width: 100%;
   height: 100%;
   background-color: rgb(254, 233, 207);
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   border: 0;
-  transition: 0.3s ease;
+  transition: 0.5s ease;
+  z-index: 2;
 }
-.notebook__page.previous-page {
-  transform: rotateY(-180deg) translateX(0.5%);
+.notebook__page.active {
+  z-index: 3;
+}
+.notebook__page.page-passed {
+  transform-origin: left;
+  transform: rotateY(-180deg) translateX(1%) scale(0.98);
+  z-index: 5;
 }
 .notebook.show-page {
   border: 2px solid black;
@@ -258,6 +265,9 @@ body.dark-mode .header {
   border-right: 2px solid #222;
   box-shadow: 17px 13px 8px 3px rgba(0, 0, 0, 0.1);
   z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(220.55deg, #7CF7FF 0%, #4B73FF 100%);
   transform-origin: left;
   transition: transform 1s ease;
@@ -275,9 +285,21 @@ body.dark-mode .header {
 .notebook__cover.cover-opened {
   transform: rotateY(-180deg) translateX(0.5%);
 }
+.notebook__cover.cover-opened .notebook__cover__title {
+  opacity: 0;
+}
 .notebook__cover.cover-opened::before {
   width: 2%;
   left: -1%;
+}
+.notebook__cover__title {
+  font-size: 2.3rem;
+  font-weight: bold;
+  text-decoration: underline;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transition: opacity 0.5s ease;
 }
 .notebook__task {
   width: 100%;
@@ -319,7 +341,7 @@ body.dark-mode .header {
 .notebook-buttons {
   position: absolute;
   top: 50%;
-  right: 20%;
+  right: 5%;
   transform: translate(0, -50%);
   display: flex;
   flex-direction: column;

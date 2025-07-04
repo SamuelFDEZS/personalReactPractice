@@ -19,7 +19,8 @@ export const NoteLine = ({ text, handleTextChange, index }) => {
             {text && <input type='checkbox' name='note' className='notebook__task__checkbox' checked={checked} onChange={() => setChecked(!checked)} />}
             <div className={`notebook__task__container ${checked ? 'completed' : ''}`}>
                 <textarea
-                    rows='1' name='note' className='notebook__task__container__note-line' value={text} onInput={(e) => {
+                    rows='1' name='note' className='notebook__task__container__note-line'
+                    value={text} onInput={(e) => {
                         autoGrow(e);
                         handleTextChange(index, e.target.value);
                     }}

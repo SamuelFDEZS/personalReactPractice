@@ -26,25 +26,27 @@ function App () {
     const unFlipPage = () => {
         setPageFlips(prev => {
             const newFlips = [...prev];
-            newFlips[currentPage] = false;
+            newFlips[currentPage - 1] = false;
             return newFlips;
         });
     };
     const handleNextPage = () => {
+        const nextPage = currentPage + 1;
         if (currentPage > 10) return;
-        if (!page[currentPage + 1]) {
+        if (!page[nextPage]) {
             const pageCopy = { ...page };
-            pageCopy[currentPage + 1] = Array(13).fill(null).map(() => (
+            pageCopy[nextPage] = Array(13).fill(null).map(() => (
                 { marked: false, text: '' }
             ));
             setPage({ ...pageCopy });
         }
         flipPage();
-        setCurrentPage(currentPage + 1);
+        setCurrentPage(nextPage);
     };
 
     const handlePreviousPage = () => {
-        if (currentPage >= 1) setCurrentPage(currentPage - 1);
+        const previousPage = currentPage - 1;
+        if (currentPage > 1) setCurrentPage(previousPage);
         unFlipPage();
     };
 
@@ -59,6 +61,12 @@ function App () {
     const handleColorChange = () => {
         setIsLightMode(!isLightMode);
         console.log(isLightMode);
+    };
+
+    const handleOpenCloseNotebook = () => {
+        setIsNotebookOpen(!isNotebookOpen);
+        setCurrentPage(1);
+        setPageFlips(Array(11).fill(false));
     };
 
     useEffect(() => {
@@ -86,20 +94,31 @@ function App () {
             </header>
 
             <main className={`notebook ${isNotebookOpen ? 'show-page' : ''}`}>
-                <div className={`notebook__cover ${!isNotebookOpen ? 'cover-closed' : 'cover-opened'}`} />
-                <div className={`notebook__page ${pageFlips[currentPage] ? 'previous-page' : ''}`}>
-                    {
-                        page[currentPage].map((task, i) => {
-                            return <NoteLine text={task.text} key={i} handleTextChange={handleTextChange} index={i} />;
-                        })
-                    }
-                </div>
+                <div className={`notebook__cover ${!isNotebookOpen ? 'cover-closed' : 'cover-opened'}`}><h3 className='notebook__cover__title'>My ToDo List</h3></div>
+
+                {
+                    Object.keys(page).map((pageNum, i) => {
+                        return (
+                            <div
+                                key={i}
+                                className={`notebook__page ${Number(pageNum) === currentPage ? 'active' : ''} ${pageFlips[pageNum] ? 'page-passed' : ''}`}
+                            >
+                                {
+                                    page[Number(pageNum)].map((task, j) => {
+                                        console.log(currentPage);
+                                        return <NoteLine text={task.text} key={j} handleTextChange={handleTextChange} index={j} />;
+                                    })
+                                }
+                            </div>
+                        );
+                    })
+                }
             </main>
 
             <div className='notebook-buttons'>
                 <button onClick={handleNextPage} className={`notebook-buttons__button notebook-buttons__button--next ${isNotebookOpen ? 'show-arrow' : ''}`}><FontAwesomeIcon icon={faArrowRight} /></button>
                 <button onClick={handlePreviousPage} className={`notebook-buttons__button notebook-buttons__button--previous ${isNotebookOpen && currentPage > 1 ? 'show-arrow' : ''}`}><FontAwesomeIcon icon={faArrowLeft} /></button>
-                <button className='notebook-buttons__button notebook-buttons__button--close' onClick={() => setIsNotebookOpen(!isNotebookOpen)}>{isNotebookOpen ? 'CLOSE' : 'OPEN'}</button>
+                <button className='notebook-buttons__button notebook-buttons__button--close' onClick={handleOpenCloseNotebook}>{isNotebookOpen ? 'CLOSE' : 'OPEN'}</button>
             </div>
         </>
     );

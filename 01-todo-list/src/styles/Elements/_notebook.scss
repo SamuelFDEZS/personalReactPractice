@@ -2,24 +2,32 @@
     width: 40%;
     height: 88vh;
     margin-top: 1%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
+    position: relative;
+    left: 41%;
     transition: 0.3s ease;
 
     &__page {
         width: 100%;
         height: 100%;
         background-color: rgb(254, 233, 207);
-        position: relative;
+        position: absolute;
+        left: 0;
+        top: 0;
         display: flex;
         flex-direction: column;
         border-radius: 5px;
         border: 0;
-        transition: 0.3s ease;
+        transition: 0.5s ease;
+        z-index: 2;
 
-        &.previous-page {
-            transform: rotateY(-180deg) translateX(0.5%);
+        &.active {
+            z-index: 3;
+        }
+
+        &.page-passed {
+            transform-origin: left;
+            transform: rotateY(-180deg) translateX(1%) scale(0.98);
+            z-index: 5;
         }
     }
 
@@ -40,9 +48,13 @@
         border-right: 2px solid #222;
         box-shadow: 17px 13px 8px 3px rgba(0, 0, 0, 0.1);
         z-index: 4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background: linear-gradient(220.55deg, #7CF7FF 0%, #4B73FF 100%);
         transform-origin: left;
         transition: transform 1s ease;
+
 
         &::before {
             content: "";
@@ -61,10 +73,21 @@
         &.cover-opened {
             transform: rotateY(-180deg) translateX(0.5%);
 
+            & .notebook__cover__title {
+                opacity: 0;
+            }
             &::before {
                 width: 2%;
                 left: -1%;
             }
+        }
+
+        &__title {
+            font-size: 2.3rem;
+            font-weight: bold;
+            text-decoration: underline;
+            user-select: none;
+            transition: opacity 0.5s ease;
         }
     }
 
@@ -116,7 +139,7 @@
 .notebook-buttons {
     position: absolute;
     top: 50%;
-    right: 20%;
+    right: 5%;
     transform: translate(0, -50%);
     display: flex;
     flex-direction: column;
