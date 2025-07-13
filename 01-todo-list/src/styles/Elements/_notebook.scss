@@ -28,6 +28,11 @@
             transform-origin: left;
             transform: rotateY(-180deg) translateX(1%) scale(0.98);
             z-index: 5;
+            pointer-events: none;
+
+            & .notebook__task__container__note-line {
+                color: rgba(0, 0, 0, 0.5);
+            }
         }
     }
 
@@ -76,6 +81,7 @@
             & .notebook__cover__title {
                 opacity: 0;
             }
+
             &::before {
                 width: 2%;
                 left: -1%;

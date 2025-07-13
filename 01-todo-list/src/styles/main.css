@@ -249,6 +249,10 @@ body.dark-mode .header {
   transform-origin: left;
   transform: rotateY(-180deg) translateX(1%) scale(0.98);
   z-index: 5;
+  pointer-events: none;
+}
+.notebook__page.page-passed .notebook__task__container__note-line {
+  color: rgba(0, 0, 0, 0.5);
 }
 .notebook.show-page {
   border: 2px solid black;

@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 function App () {
-    const [isLightMode, setIsLightMode] = useState(true);
-    const [page, setPage] = useState({
-        1: Array(13).fill(null).map(() => (
-            { marked: false, text: '' }
-        ))
+    const [isLightMode, setIsLightMode] = useState(() => {
+        const lightModeOn = localStorage.getItem('lightModeOn');
+        return JSON.parse(lightModeOn) || true;
+    });
+    const [page, setPage] = useState(() => {
+        const savedPages = localStorage.getItem('savedPages');
+        return JSON.parse(savedPages) ||
+        {
+            1: Array(13).fill(null).map(() => (
+                { marked: false, text: '' }
+            ))
+        };
     });
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,14 +60,20 @@ function App () {
     const handleTextChange = (index, text) => {
         const pageCopy = [...page[currentPage]];
         pageCopy[index] = { ...pageCopy[index], text };
-        setPage(prev => ({
-            ...prev,
-            [currentPage]: pageCopy
-        }));
+
+        setPage(prev => {
+            const newPage = {
+                ...prev,
+                [currentPage]: pageCopy
+            };
+            localStorage.setItem('savedPages', JSON.stringify(newPage));
+
+            return newPage;
+        });
     };
     const handleColorChange = () => {
         setIsLightMode(!isLightMode);
-        console.log(isLightMode);
+        localStorage.setItem('lightModeOn', JSON.stringify(!isLightMode));
     };
 
     const handleOpenCloseNotebook = () => {
@@ -87,10 +100,6 @@ function App () {
                     <input onClick={handleColorChange} type='checkbox' id='checkboxInput' className='header__color-button__input' />
                     <label htmlFor='checkboxInput' className='toggleSwitch header__color-button__label' />
                 </div>
-
-                <div className='header__username-container'>
-                    <span className='header__username-container__username'>Samuel test</span>
-                </div>
             </header>
 
             <main className={`notebook ${isNotebookOpen ? 'show-page' : ''}`}>
@@ -105,7 +114,6 @@ function App () {
                             >
                                 {
                                     page[Number(pageNum)].map((task, j) => {
-                                        console.log(currentPage);
                                         return <NoteLine text={task.text} key={j} handleTextChange={handleTextChange} index={j} />;
                                     })
                                 }

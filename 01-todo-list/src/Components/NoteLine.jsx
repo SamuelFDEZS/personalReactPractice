@@ -19,10 +19,21 @@ export const NoteLine = ({ text, handleTextChange, index }) => {
             {text && <input type='checkbox' name='note' className='notebook__task__checkbox' checked={checked} onChange={() => setChecked(!checked)} />}
             <div className={`notebook__task__container ${checked ? 'completed' : ''}`}>
                 <textarea
-                    rows='1' name='note' className='notebook__task__container__note-line'
-                    value={text} onInput={(e) => {
+                    rows='1' maxLength={135} name='note' className='notebook__task__container__note-line'
+                    value={text} onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            if (e.currentTarget.value.includes('\n')) {
+                                e.preventDefault();
+                            }
+                        }
+                    }} onChange={(e) => {
+                        const value = e.currentTarget.value;
+
+                        const lines = value.split('\n');
+                        const limited = lines.slice(0, 2).join('\n');
+
                         autoGrow(e);
-                        handleTextChange(index, e.target.value);
+                        handleTextChange(index, limited);
                     }}
                 />
             </div>
